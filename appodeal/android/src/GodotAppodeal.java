@@ -1,6 +1,7 @@
 package org.godotengine.godot;
 
 import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.UserSettings;
 import com.appodeal.ads.BannerCallbacks;
 import com.appodeal.ads.InterstitialCallbacks;
 import com.appodeal.ads.SkippableVideoCallbacks;
@@ -35,7 +36,8 @@ public class GodotAppodeal extends Godot.SingletonBase {
                 "init", "showBannerAd", "showVideoAd", "showInterstitialAd", "showInterstitialAndVideoAds", "hideBannerAd",
                 "hideVideoAd", "hideInterstitialAd", "isBannerLoaded", "isVideoLoaded", "isInterstitialLoaded", "isAnyAdLoaded",
                 "isRewardedVideoLoaded", "showRewardedVideoAd", "showNonSkipVideoAd", "loadNonSkipVideoAd", "loadBannerAd",
-                "loadInterstitialVideoAd", "loadRewardedVideoAd", "loadVideoAd",  "registerCallback", "unregisterCallback"
+                "loadInterstitialVideoAd", "loadRewardedVideoAd", "loadVideoAd",  "registerCallback", "unregisterCallback",
+                "userSetAge", "userSetBirthday", "userSetEmail", "userSetGender"
         });
 
         callbackFunctions = new HashMap<String, String>();
@@ -59,6 +61,29 @@ public class GodotAppodeal extends Godot.SingletonBase {
         if (callbackFunctions.containsKey(callback_type)) {
             GodotLib.calldeferred(instanceId, callbackFunctions.get(callback_type), new Object[]{});
         }
+    }
+
+    public void userSetAge(final int age) {
+        UserSettings userSettings = Appodeal.getUserSettings(activity);
+        userSettings.setAge(age);
+    }
+
+    public void userSetBirthday(final String birthday) {
+        UserSettings userSettings = Appodeal.getUserSettings(activity);
+        userSettings.setBirthday(birthday);
+    }
+
+    public void userSetEmail(final String email) {
+        UserSettings userSettings = Appodeal.getUserSettings(activity);
+        userSettings.setEmail(email);
+    }
+
+    public void userSetGender(final int gender) {
+        UserSettings userSettings = Appodeal.getUserSettings(activity);
+        if(gender == 0)
+            userSettings.setGender(UserSettings.Gender.FEMALE);
+        else
+            userSettings.setGender(UserSettings.Gender.MALE);
     }
 
     //initialization of appodeal
