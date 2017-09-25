@@ -4,7 +4,6 @@ import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.UserSettings;
 import com.appodeal.ads.BannerCallbacks;
 import com.appodeal.ads.InterstitialCallbacks;
-import com.appodeal.ads.SkippableVideoCallbacks;
 import com.appodeal.ads.NonSkippableVideoCallbacks;
 import com.appodeal.ads.RewardedVideoCallbacks;
 import android.app.Activity;
@@ -33,11 +32,11 @@ public class GodotAppodeal extends Godot.SingletonBase {
         //The registration of this and its functions
         registerClass("Appodeal", new String[]{
 
-                "init", "showBannerAd", "showVideoAd", "showInterstitialAd", "showInterstitialAndVideoAds", "hideBannerAd",
-                "hideVideoAd", "hideInterstitialAd", "isBannerLoaded", "isVideoLoaded", "isInterstitialLoaded", "isAnyAdLoaded",
+                "init", "showBannerAd", "showInterstitialAd", "hideBannerAd",
+                "hideInterstitialAd", "isBannerLoaded", "isInterstitialLoaded", "isAnyAdLoaded",
                 "isRewardedVideoLoaded", "showRewardedVideoAd", "showNonSkipVideoAd", "loadNonSkipVideoAd", "loadBannerAd",
-                "loadInterstitialVideoAd", "loadRewardedVideoAd", "loadVideoAd",  "registerCallback", "unregisterCallback",
-                "userSetAge", "userSetBirthday", "userSetEmail", "userSetGender"
+                "loadInterstitialVideoAd", "loadRewardedVideoAd", "registerCallback", "unregisterCallback",
+                "userSetAge", "userSetGender"
         });
 
         callbackFunctions = new HashMap<String, String>();
@@ -68,16 +67,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
         userSettings.setAge(age);
     }
 
-    public void userSetBirthday(final String birthday) {
-        UserSettings userSettings = Appodeal.getUserSettings(activity);
-        userSettings.setBirthday(birthday);
-    }
-
-    public void userSetEmail(final String email) {
-        UserSettings userSettings = Appodeal.getUserSettings(activity);
-        userSettings.setEmail(email);
-    }
-
     public void userSetGender(final int gender) {
         UserSettings userSettings = Appodeal.getUserSettings(activity);
         if(gender == 0)
@@ -104,7 +93,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
 
                 //set all auto cache to false
                 Appodeal.setAutoCache(Appodeal.BANNER, false);
-                Appodeal.setAutoCache(Appodeal.SKIPPABLE_VIDEO, false);
                 Appodeal.setAutoCache(Appodeal.NON_SKIPPABLE_VIDEO, false);
                 Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
                 Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
@@ -113,21 +101,24 @@ public class GodotAppodeal extends Godot.SingletonBase {
                     Appodeal.initialize(activity, appKey, Appodeal.BANNER);
                     Appodeal.cache(activity, Appodeal.BANNER);
                 } else if (type.equals("banner/video")) {
-                    Appodeal.confirm(Appodeal.SKIPPABLE_VIDEO);
-                    Appodeal.initialize(activity, appKey, Appodeal.BANNER | Appodeal.SKIPPABLE_VIDEO);
+                    // deprecated
+                    //Appodeal.confirm(Appodeal.SKIPPABLE_VIDEO);
+                    Appodeal.initialize(activity, appKey, Appodeal.BANNER /*| Appodeal.SKIPPABLE_VIDEO*/);
                     Appodeal.cache(activity, Appodeal.BANNER);
-                    Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
+                    //Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
                 } else if (type.equals("video")) {
-                    Appodeal.confirm(Appodeal.SKIPPABLE_VIDEO);
-                    Appodeal.initialize(activity, appKey, Appodeal.SKIPPABLE_VIDEO);
-                    Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
+                    // deprecated
+                    //Appodeal.confirm(Appodeal.SKIPPABLE_VIDEO);
+                    //Appodeal.initialize(activity, appKey, Appodeal.SKIPPABLE_VIDEO);
+                    //Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
                 } else if (type.equals("interstitial")) {
                     Appodeal.initialize(activity, appKey, Appodeal.INTERSTITIAL);
                     Appodeal.cache(activity, Appodeal.INTERSTITIAL);
                 } else if (type.equals("interstitial/video")) {
-                    Appodeal.confirm(Appodeal.SKIPPABLE_VIDEO);
-                    Appodeal.initialize(activity, appKey, Appodeal.INTERSTITIAL | Appodeal.SKIPPABLE_VIDEO);
-                    Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
+                    // deprecated
+                    //Appodeal.confirm(Appodeal.SKIPPABLE_VIDEO);
+                    Appodeal.initialize(activity, appKey, Appodeal.INTERSTITIAL /*| Appodeal.SKIPPABLE_VIDEO*/);
+                    //Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
                     Appodeal.cache(activity, Appodeal.INTERSTITIAL);
                 } else if (type.equals("interstitial/nonSkipVideo")) {
                     Appodeal.initialize(activity, appKey, Appodeal.INTERSTITIAL | Appodeal.NON_SKIPPABLE_VIDEO);
@@ -175,11 +166,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
         }
     }
 
-    public void showVideoAd() {
-        Appodeal.show(activity, Appodeal.SKIPPABLE_VIDEO);
-        Log.d("godot", "show video");
-    }
-
     public void showNonSkipVideoAd() {
         Appodeal.show(activity, Appodeal.NON_SKIPPABLE_VIDEO);
         Log.d("godot", "show video");
@@ -195,19 +181,9 @@ public class GodotAppodeal extends Godot.SingletonBase {
         Log.d("godot", "show interstitial");
     }
 
-    public void showInterstitialAndVideoAds() {
-        Appodeal.show(activity, Appodeal.SKIPPABLE_VIDEO | Appodeal.INTERSTITIAL);
-        Log.d("godot", "show video and interstitial");
-    }
-
     public void hideBannerAd() {
         Appodeal.hide(activity, Appodeal.BANNER);
         Log.d("godot", "hide banner");
-    }
-
-    public void hideVideoAd() {
-        Appodeal.hide(activity, Appodeal.SKIPPABLE_VIDEO);
-        Log.d("godot", "hide video");
     }
 
     public void hideInterstitialAd() {
@@ -227,10 +203,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
         Appodeal.cache(activity, Appodeal.INTERSTITIAL);
     }
 
-    public void loadVideoAd(){
-        Appodeal.cache(activity, Appodeal.SKIPPABLE_VIDEO);
-    }
-
     public void loadRewardedVideoAd(){
         Appodeal.cache(activity, Appodeal.REWARDED_VIDEO);
     }
@@ -238,12 +210,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
     public boolean isBannerLoaded() {
         boolean loaded;
         loaded = Appodeal.isLoaded(Appodeal.BANNER);
-        return loaded;
-    }
-
-    public boolean isVideoLoaded() {
-        boolean loaded;
-        loaded = Appodeal.isLoaded(Appodeal.SKIPPABLE_VIDEO);
         return loaded;
     }
 
@@ -264,9 +230,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
             return true;
         }
         if (Appodeal.isLoaded(Appodeal.BANNER)) {
-            return true;
-        }
-        if (Appodeal.isLoaded(Appodeal.SKIPPABLE_VIDEO)) {
             return true;
         }
         if (Appodeal.isLoaded(Appodeal.REWARDED_VIDEO)) {
@@ -345,44 +308,6 @@ public class GodotAppodeal extends Godot.SingletonBase {
 
                 showToastOnTesting("onBannerClicked");
                 runCallback("onBannerClicked");
-            }
-        });
-
-
-        Appodeal.setSkippableVideoCallbacks(new SkippableVideoCallbacks() {
-
-            @Override
-            public void onSkippableVideoLoaded() {
-
-                showToastOnTesting("onSkippableVideoLoaded");
-                runCallback("onSkippableVideoLoaded");
-            }
-
-            @Override
-            public void onSkippableVideoFailedToLoad() {
-                showToastOnTesting("onSkippableVideoFailedToLoad");
-                runCallback("onSkippableVideoFailedToLoad");
-            }
-
-            @Override
-            public void onSkippableVideoShown() {
-
-                showToastOnTesting("onSkippableVideoShown");
-                runCallback("onSkippableVideoShown");
-            }
-
-            @Override
-            public void onSkippableVideoFinished() {
-
-                showToastOnTesting("onSkippableVideoFinished");
-                runCallback("onSkippableVideoFinished");
-            }
-
-            @Override
-            public void onSkippableVideoClosed(boolean finished) {
-
-                showToastOnTesting(String.format("onSkippableVideoClosed, finished: %s", finished));
-                runCallback("onSkippableVideoClosed");
             }
         });
 
