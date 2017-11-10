@@ -1,3 +1,4 @@
+
 <activity android:name="com.appodeal.ads.InterstitialActivity"
 	android:configChanges="orientation|screenSize"
 	android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -229,3 +230,4 @@
 	android:authorities="${applicationId}.MediaContentProvider"
 	android:grantUriPermissions="true"
 	android:exported="false" />
+
