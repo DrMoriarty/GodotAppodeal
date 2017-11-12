@@ -156,55 +156,110 @@ public class GodotAppodeal extends Godot.SingletonBase {
     public void showBannerAd(String type) {
 
         if (type.equals("top")) {
-            Appodeal.show(activity, Appodeal.BANNER_TOP);
-            Log.d("godot", "show banner top");
+            activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.show(activity, Appodeal.BANNER_TOP);
+                        Log.d("godot", "show banner top");
+                    }
+                });
         } else if (type.equals("bottom")) {
-            Appodeal.show(activity, Appodeal.BANNER_BOTTOM);
-            Log.d("godot", "show banner buttom");
+            activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.show(activity, Appodeal.BANNER_BOTTOM);
+                        Log.d("godot", "show banner buttom");
+                    }
+                });
         } else {
             Log.d("godot", "Did not find banner of type :" + type);
         }
     }
 
     public void showNonSkipVideoAd() {
-        Appodeal.show(activity, Appodeal.NON_SKIPPABLE_VIDEO);
-        Log.d("godot", "show video");
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.show(activity, Appodeal.NON_SKIPPABLE_VIDEO);
+                        Log.d("godot", "show video");
+                    }
+            });
     }
 
     public void showRewardedVideoAd() {
-        Appodeal.show(activity, Appodeal.REWARDED_VIDEO);
-        Log.d("godot", "show rewarded video");
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.show(activity, Appodeal.REWARDED_VIDEO);
+                        Log.d("godot", "show rewarded video");
+                    }
+            });
     }
 
     public void showInterstitialAd() {
-        Appodeal.show(activity, Appodeal.INTERSTITIAL);
-        Log.d("godot", "show interstitial");
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.show(activity, Appodeal.INTERSTITIAL);
+                        Log.d("godot", "show interstitial");
+                    }
+            });
     }
 
     public void hideBannerAd() {
-        Appodeal.hide(activity, Appodeal.BANNER);
-        Log.d("godot", "hide banner");
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.hide(activity, Appodeal.BANNER);
+                        Log.d("godot", "hide banner");
+                    }
+            });
     }
 
     public void hideInterstitialAd() {
-        Appodeal.hide(activity, Appodeal.INTERSTITIAL);
-        Log.d("godot", "hide interstitial");
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.hide(activity, Appodeal.INTERSTITIAL);
+                        Log.d("godot", "hide interstitial");
+                    }
+            });
     }
 
     public void loadNonSkipVideoAd(){
-        Appodeal.cache(activity, Appodeal.NON_SKIPPABLE_VIDEO);
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.cache(activity, Appodeal.NON_SKIPPABLE_VIDEO);
+                    }
+            });
     }
 
     public void loadBannerAd(){
-        Appodeal.cache(activity, Appodeal.BANNER);
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.cache(activity, Appodeal.BANNER);
+                    }
+            });
     }
 
     public void loadInterstitialVideoAd(){
-        Appodeal.cache(activity, Appodeal.INTERSTITIAL);
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.cache(activity, Appodeal.INTERSTITIAL);
+                    }
+            });
     }
 
     public void loadRewardedVideoAd(){
-        Appodeal.cache(activity, Appodeal.REWARDED_VIDEO);
+        activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Appodeal.cache(activity, Appodeal.REWARDED_VIDEO);
+                    }
+            });
     }
 
     public boolean isBannerLoaded() {
